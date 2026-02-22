@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>BizWrite AI — Content That Converts</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;0,900;1,700&family=DM+Sans:wght@300;400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+
+  <div class="bg-orbs">
+    <div class="orb orb1"></div>
+    <div class="orb orb2"></div>
+    <div class="orb orb3"></div>
+  </div>
+
+  <div class="wrapper">
+
+    <header class="header">
+      <div class="logo">BizWrite <span>AI</span></div>
+      <div class="badge">Professional Content Suite</div>
+    </header>
+
+    <section class="hero">
+      <div class="hero-tag">Trusted by 500+ business owners</div>
+      <h1>The content engine<br><em>your business deserves.</em></h1>
+      <p>Stop wasting hours on writing. BizWrite AI generates high-converting business content in seconds — captions, descriptions, emails, ads and more.</p>
+      <div class="hero-stats">
+        <div class="stat"><strong>8</strong><span>Content Types</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>5</strong><span>Tone Options</span></div>
+        <div class="stat-divider"></div>
+        <div class="stat"><strong>10s</strong><span>Generation Time</span></div>
+      </div>
+    </section>
+
+    <div class="card">
+
+      <div class="field">
+        <label>Content Type</label>
+        <div class="type-grid">
+          <button class="type-btn active" data-type="social">Social Caption</button>
+          <button class="type-btn" data-type="product">Product Description</button>
+          <button class="type-btn" data-type="reply">Customer Reply</button>
+          <button class="type-btn" data-type="invoice">Invoice Message</button>
+          <button class="type-btn" data-type="promo">Promo Message</button>
+          <button class="type-btn" data-type="email">Email Newsletter</button>
+          <button class="type-btn" data-type="ad">Ad Copy</button>
+          <button class="type-btn" data-type="blog">Blog Intro</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label>Tone of Voice</label>
+        <div class="tone-row">
+          <button class="tone-btn active" data-tone="professional">Professional</button>
+          <button class="tone-btn" data-tone="casual">Casual</button>
+          <button class="tone-btn" data-tone="funny">Humorous</button>
+          <button class="tone-btn" data-tone="urgent">Urgent</button>
+          <button class="tone-btn" data-tone="luxury">Luxury</button>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="businessInfo">Describe your business or situation</label>
+        <textarea id="businessInfo" rows="5" placeholder="e.g. I own a pizza restaurant in New York and want to promote a buy-one-get-one-free deal every Tuesday evening..."></textarea>
+        <div class="char-hint" id="charHint">0 characters typed</div>
+      </div>
+
+      <button class="generate-btn" id="generateBtn" onclick="generateContent()">
+        <span id="btnText">Generate Content</span>
+        <div class="spinner hidden" id="spinner"></div>
+      </button>
+
+      <div id="output" class="output hidden">
+        <div class="output-header">
+          <span class="output-label">Generated Content</span>
+          <div class="output-meta">
+            <span id="charCount" class="char-count"></span>
+            <button class="copy-btn" onclick="copyResult()" id="copyBtn">Copy to Clipboard</button>
+          </div>
+        </div>
+        <p id="result"></p>
+      </div>
+
+      <div class="history hidden" id="historySection">
+        <div class="history-title">Recent Generations</div>
+        <div id="historyList"></div>
+      </div>
+
+    </div>
+
+    <section class="features">
+      <div class="feature">
+        <div class="feature-num">01</div>
+        <div class="feature-text">
+          <strong>8 Content Formats</strong>
+          <p>From social captions to full email newsletters — every format your business needs.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-num">02</div>
+        <div class="feature-text">
+          <strong>Tone Control</strong>
+          <p>Match your brand voice — professional, casual, urgent, humorous or luxury.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-num">03</div>
+        <div class="feature-text">
+          <strong>Instant Results</strong>
+          <p>No prompting skills needed. Describe your business and get polished content in seconds.</p>
+        </div>
+      </div>
+      <div class="feature">
+        <div class="feature-num">04</div>
+        <div class="feature-text">
+          <strong>Generation History</strong>
+          <p>Your last 3 generations are saved so you never lose great content.</p>
+        </div>
+      </div>
+    </section>
+
+    <footer class="footer">
+      &copy; 2026 BizWrite AI — Professional Content for Modern Businesses
+    </footer>
+
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
