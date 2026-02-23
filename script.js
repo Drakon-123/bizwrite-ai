@@ -27,7 +27,10 @@ window.onload = function() {
 
   freeTrialUsed = localStorage.getItem("bizwrite_trial_used") === "true";
 
-  if (!freeTrialUsed) {
+  if (freeTrialUsed) {
+    // Show app but generateContent will hit paywall
+    showApp();
+  } else {
     showApp();
     showTrialBanner();
   }
