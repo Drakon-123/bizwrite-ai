@@ -16,7 +16,21 @@
     <div class="orb orb3"></div>
   </div>
 
-  <div class="wrapper">
+  <!-- Access Key Screen -->
+  <div class="gate" id="gate">
+    <div class="gate-box">
+      <div class="logo">BizWrite <span>AI</span></div>
+      <h2>Enter Your Access Key</h2>
+      <p>Purchase a license at our store to get your unique access key.</p>
+      <input type="text" id="keyInput" placeholder="BW-XXXX-XXXX-XXXX-XXXX" maxlength="24" />
+      <div class="key-error hidden" id="keyError"></div>
+      <button onclick="verifyKey()" id="keyBtn">Unlock Access</button>
+      <a href="https://gumroad.com" target="_blank" class="buy-link">Don't have a key? Purchase here</a>
+    </div>
+  </div>
+
+  <!-- Main App -->
+  <div class="wrapper hidden" id="app">
 
     <header class="header">
       <div class="logo">BizWrite <span>AI</span></div>
@@ -24,9 +38,9 @@
     </header>
 
     <section class="hero">
-      <div class="hero-tag">Trusted by 500+ business owners</div>
+      <div class="hero-tag">Professional Business Content Generator</div>
       <h1>The content engine<br><em>your business deserves.</em></h1>
-      <p>Stop wasting hours on writing. BizWrite AI generates high-converting business content in seconds — captions, descriptions, emails, ads and more.</p>
+      <p>Stop wasting hours on writing. BizWrite AI generates high-converting business content in seconds.</p>
       <div class="hero-stats">
         <div class="stat"><strong>8</strong><span>Content Types</span></div>
         <div class="stat-divider"></div>

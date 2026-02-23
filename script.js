@@ -1,6 +1,9 @@
 let selectedType = "social";
 let selectedTone = "professional";
 let history = [];
+let sessionKey = "";
+
+const API_URL = "https://web-production-dda4d.up.railway.app";
 
 const prompts = {
   social: "Write an engaging social media caption",
@@ -12,6 +15,65 @@ const prompts = {
   ad: "Write high-converting ad copy",
   blog: "Write a captivating blog introduction"
 };
+
+// Check if key is already saved in session
+window.onload = function() {
+  const savedKey = sessionStorage.getItem("bizwrite_key");
+  if (savedKey) {
+    sessionKey = savedKey;
+    showApp();
+  }
+};
+
+async function verifyKey() {
+  const key = document.getElementById("keyInput").value.trim().toUpperCase();
+  const btn = document.getElementById("keyBtn");
+  const error = document.getElementById("keyError");
+
+  if (!key) {
+    showKeyError("Please enter your access key.");
+    return;
+  }
+
+  btn.textContent = "Verifying...";
+  btn.disabled = true;
+  error.classList.add("hidden");
+
+  try {
+    const response = await fetch(`${API_URL}/verify-key`, {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ key })
+    });
+
+    const data = await response.json();
+
+    if (data.valid) {
+      sessionKey = key;
+      sessionStorage.setItem("bizwrite_key", key);
+      showApp();
+    } else {
+      showKeyError(data.reason || "Invalid access key.");
+      btn.textContent = "Unlock Access";
+      btn.disabled = false;
+    }
+  } catch (error) {
+    showKeyError("Connection error. Please try again.");
+    btn.textContent = "Unlock Access";
+    btn.disabled = false;
+  }
+}
+
+function showKeyError(msg) {
+  const error = document.getElementById("keyError");
+  error.textContent = msg;
+  error.classList.remove("hidden");
+}
+
+function showApp() {
+  document.getElementById("gate").classList.add("hidden");
+  document.getElementById("app").classList.remove("hidden");
+}
 
 // Type buttons
 document.querySelectorAll(".type-btn").forEach(btn => {
@@ -58,10 +120,10 @@ async function generateContent() {
   output.classList.add("hidden");
 
   try {
-    const response = await fetch("https://web-production-dda4d.up.railway.app/generate", {
+    const response = await fetch(`${API_URL}/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt })
+      body: JSON.stringify({ prompt, key: sessionKey })
     });
 
     const data = await response.json();

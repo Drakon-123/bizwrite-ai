@@ -547,3 +547,104 @@ textarea::placeholder {
   .hero-stats { gap: 16px; }
   .tone-row { gap: 6px; }
 }
+
+/* Gate Screen */
+.gate {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  background: var(--cream);
+}
+
+.gate-box {
+  background: white;
+  border-radius: 20px;
+  padding: 48px 40px;
+  max-width: 480px;
+  width: 100%;
+  box-shadow: 0 4px 60px rgba(0,0,0,0.08);
+  border: 1px solid rgba(201,168,76,0.1);
+  text-align: center;
+}
+
+.gate-box .logo {
+  font-size: 1.6rem;
+  margin-bottom: 24px;
+  display: block;
+}
+
+.gate-box h2 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.6rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.gate-box p {
+  color: var(--gray);
+  font-size: 0.9rem;
+  margin-bottom: 28px;
+  line-height: 1.6;
+  font-weight: 300;
+}
+
+.gate-box input {
+  width: 100%;
+  padding: 14px 16px;
+  border: 1.5px solid var(--gray-light);
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  text-align: center;
+  letter-spacing: 0.1em;
+  outline: none;
+  transition: border 0.2s;
+  margin-bottom: 12px;
+  text-transform: uppercase;
+}
+
+.gate-box input:focus {
+  border-color: var(--gold);
+}
+
+.key-error {
+  color: #e53e3e;
+  font-size: 0.82rem;
+  margin-bottom: 12px;
+}
+
+.gate-box button {
+  width: 100%;
+  padding: 16px;
+  background: var(--black);
+  color: white;
+  border: none;
+  border-radius: 10px;
+  font-family: 'DM Sans', sans-serif;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+}
+
+.gate-box button:hover {
+  background: var(--gold);
+}
+
+.buy-link {
+  display: block;
+  font-size: 0.82rem;
+  color: var(--gray);
+  text-decoration: none;
+  transition: color 0.2s;
+}
+
+.buy-link:hover {
+  color: var(--gold);
+}
