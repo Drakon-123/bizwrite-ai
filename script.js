@@ -2,6 +2,7 @@ let selectedType = "social";
 let selectedTone = "professional";
 let history = [];
 let sessionKey = "";
+let freeTrialUsed = false;
 
 const API_URL = "https://web-production-dda4d.up.railway.app";
 
@@ -16,14 +17,46 @@ const prompts = {
   blog: "Write a captivating blog introduction"
 };
 
-// Check if key is already saved in session
 window.onload = function() {
-  const savedKey = sessionStorage.getItem("bizwrite_key");
+  const savedKey = localStorage.getItem("bizwrite_key");
   if (savedKey) {
     sessionKey = savedKey;
     showApp();
+    return;
+  }
+
+  freeTrialUsed = localStorage.getItem("bizwrite_trial_used") === "true";
+
+  if (!freeTrialUsed) {
+    showApp();
+    showTrialBanner();
   }
 };
+
+function showTrialBanner() {
+  const banner = document.createElement("div");
+  banner.id = "trialBanner";
+  banner.innerHTML = `<div class="trial-banner">You have <strong>1 free generation</strong> remaining. <a href="landing.html" target="_blank">Get unlimited access for $19</a></div>`;
+  document.querySelector(".card").prepend(banner);
+}
+
+function showPaywall() {
+  const output = document.getElementById("output");
+  output.innerHTML = `
+    <div class="paywall">
+      <h3>You've used your free generation!</h3>
+      <p>Get unlimited access to BizWrite AI — all 8 content types, all 5 tones, forever.</p>
+      <a href="landing.html" target="_blank" class="paywall-btn">Get Unlimited Access — $19</a>
+      <div class="paywall-key">Already purchased? <span onclick="showKeyInput()">Enter your access key</span></div>
+    </div>
+  `;
+  output.classList.remove("hidden");
+}
+
+function showKeyInput() {
+  document.getElementById("gate").classList.remove("hidden");
+  document.getElementById("app").classList.add("hidden");
+}
 
 async function verifyKey() {
   const key = document.getElementById("keyInput").value.trim().toUpperCase();
@@ -50,14 +83,16 @@ async function verifyKey() {
 
     if (data.valid) {
       sessionKey = key;
-      sessionStorage.setItem("bizwrite_key", key);
+      localStorage.setItem("bizwrite_key", key);
       showApp();
+      const banner = document.getElementById("trialBanner");
+      if (banner) banner.remove();
     } else {
       showKeyError(data.reason || "Invalid access key.");
       btn.textContent = "Unlock Access";
       btn.disabled = false;
     }
-  } catch (error) {
+  } catch (err) {
     showKeyError("Connection error. Please try again.");
     btn.textContent = "Unlock Access";
     btn.disabled = false;
@@ -120,10 +155,21 @@ async function generateContent() {
   output.classList.add("hidden");
 
   try {
+    const isPaid = !!sessionKey;
+    const trialUsed = localStorage.getItem("bizwrite_trial_used") === "true";
+
+    if (!isPaid && trialUsed) {
+      showPaywall();
+      btn.disabled = false;
+      btnText.classList.remove("hidden");
+      spinner.classList.add("hidden");
+      return;
+    }
+
     const response = await fetch(`${API_URL}/generate`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({ prompt, key: sessionKey })
+      body: JSON.stringify({ prompt, key: sessionKey || "trial" })
     });
 
     const data = await response.json();
@@ -134,6 +180,13 @@ async function generateContent() {
       result.textContent = data.result;
       document.getElementById("charCount").textContent = data.result.length + " characters";
       addToHistory(data.result);
+
+      if (!isPaid) {
+        localStorage.setItem("bizwrite_trial_used", "true");
+        freeTrialUsed = true;
+        const banner = document.getElementById("trialBanner");
+        if (banner) banner.innerHTML = `<div class="trial-banner used">Free trial used. <a href="landing.html" target="_blank">Get unlimited access for $19</a></div>`;
+      }
     }
 
     output.classList.remove("hidden");

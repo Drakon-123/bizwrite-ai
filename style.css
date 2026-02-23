@@ -648,3 +648,82 @@ textarea::placeholder {
 .buy-link:hover {
   color: var(--gold);
 }
+
+/* Trial Banner */
+.trial-banner {
+  background: linear-gradient(135deg, #fffdf0, #fff9e6);
+  border: 1.5px solid var(--gold-light);
+  border-radius: 10px;
+  padding: 12px 18px;
+  font-size: 0.85rem;
+  color: var(--black);
+  margin-bottom: 24px;
+  text-align: center;
+}
+
+.trial-banner.used {
+  background: #fff5f5;
+  border-color: #fed7d7;
+}
+
+.trial-banner a {
+  color: var(--gold);
+  font-weight: 500;
+  text-decoration: none;
+  margin-left: 6px;
+}
+
+.trial-banner a:hover {
+  text-decoration: underline;
+}
+
+/* Paywall */
+.paywall {
+  text-align: center;
+  padding: 32px 24px;
+}
+
+.paywall h3 {
+  font-family: 'Playfair Display', serif;
+  font-size: 1.4rem;
+  font-weight: 700;
+  color: var(--black);
+  margin-bottom: 12px;
+}
+
+.paywall p {
+  font-size: 0.9rem;
+  color: var(--gray);
+  line-height: 1.6;
+  margin-bottom: 24px;
+  font-weight: 300;
+}
+
+.paywall-btn {
+  display: inline-block;
+  background: var(--black);
+  color: white;
+  padding: 14px 32px;
+  border-radius: 10px;
+  text-decoration: none;
+  font-size: 0.95rem;
+  font-weight: 500;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+}
+
+.paywall-btn:hover {
+  background: var(--gold);
+  transform: translateY(-1px);
+}
+
+.paywall-key {
+  font-size: 0.8rem;
+  color: #aaa;
+}
+
+.paywall-key span {
+  color: var(--gold);
+  cursor: pointer;
+  text-decoration: underline;
+}
