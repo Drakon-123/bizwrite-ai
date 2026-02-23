@@ -9,7 +9,36 @@ app.use(express.json());
 
 const groq = new Groq({ apiKey: process.env.GROQ_API_KEY });
 
-// Access keys — add more as you sell
+// Rate limiting
+const rateLimitMap = new Map();
+
+function rateLimit(req, res, next) {
+  const ip = req.headers["x-forwarded-for"] || req.socket.remoteAddress;
+  const now = Date.now();
+  const windowMs = 60 * 1000;
+  const maxRequests = 5;
+
+  if (!rateLimitMap.has(ip)) {
+    rateLimitMap.set(ip, { count: 1, start: now });
+    return next();
+  }
+
+  const data = rateLimitMap.get(ip);
+
+  if (now - data.start > windowMs) {
+    rateLimitMap.set(ip, { count: 1, start: now });
+    return next();
+  }
+
+  if (data.count >= maxRequests) {
+    return res.status(429).json({ error: "Too many requests. Please wait a minute and try again." });
+  }
+
+  data.count++;
+  return next();
+}
+
+// Access keys
 const validKeys = new Set([
   "BW-L7SQ-FCBZ-XJYF-DBFS",
   "BW-SRD7-LU9S-DS9P-Q8YD",
@@ -35,7 +64,7 @@ const validKeys = new Set([
 
 const usedKeys = new Set();
 
-app.post("/verify-key", (req, res) => {
+app.post("/verify-key", rateLimit, (req, res) => {
   const { key } = req.body;
   const cleanKey = key.trim().toUpperCase();
 
@@ -49,7 +78,7 @@ app.post("/verify-key", (req, res) => {
   }
 });
 
-app.post("/generate", async (req, res) => {
+app.post("/generate", rateLimit, async (req, res) => {
   const { prompt, key } = req.body;
 
   if (!key) {
